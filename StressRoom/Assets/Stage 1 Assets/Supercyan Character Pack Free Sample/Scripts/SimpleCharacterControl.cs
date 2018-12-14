@@ -10,7 +10,7 @@ public class SimpleCharacterControl : MonoBehaviour {
     }
 
     [SerializeField] private float m_moveSpeed = 2;
-    [SerializeField] private float m_turnSpeed = 200;
+    [SerializeField] private float m_turnSpeed = 0.0f;
     [SerializeField] private float m_jumpForce = 4;
     [SerializeField] private Animator m_animator;
     [SerializeField] private Rigidbody m_rigidBody;
@@ -33,6 +33,22 @@ public class SimpleCharacterControl : MonoBehaviour {
 
     private bool m_isGrounded;
     private List<Collider> m_collisions = new List<Collider>();
+
+    //weapon
+    public GameObject weapon;
+    public GameObject handR;
+    private Collider wpnColl;
+
+    private void Weapon() {
+        DoEquip();
+    }
+
+    private void DoEquip() {
+        weapon = Instantiate(weapon, handR.transform.position, handR.transform.rotation);
+        weapon.transform.parent = handR.transform;
+        wpnColl = weapon.gameObject.GetComponent<Collider>();
+        wpnColl.enabled = false;
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -189,4 +205,6 @@ public class SimpleCharacterControl : MonoBehaviour {
             m_animator.SetTrigger("Jump");
         }
     }
+
+
 }
